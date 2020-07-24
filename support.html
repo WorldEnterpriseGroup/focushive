@@ -28,6 +28,7 @@
     <meta name="msapplication-TileImage" content="/images/logo/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/fa/css/all.css">
 	<link rel="stylesheet" href="css/icomoon.css">
@@ -41,29 +42,42 @@
 	<link rel="stylesheet" href="css/responsive.css">
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 	<script src="js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<style>
+		input:invalid, select:invalid{
+			border-color: #ea205a;
+		}
+		small.custom-alert{
+			color: #ea205a;
+			position: absolute;
+		}
+		.tg-select {
+    	text-transform: inherit !important;
+}
+	</style>
 </head>
 <body>
 	<!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
 	<![endif]-->
-	<!--************************************
+	<!--************
 			Loader Start
-	*************************************-->
+	*************-->
 	<div id="loader-wrapper">
 		<div id="loader"></div>
 		<div class="loader-section section-left"></div>
 		<div class="loader-section section-right"></div>
 	</div>
-	<!--************************************
+	<!--************
 			Loader End
-	*************************************-->
-	<!--************************************
+	*************-->
+	<!--************
 			Wrapper Start
-	*************************************-->
+	*************-->
 	<div id="tg-wrapper" class="tg-wrapper tg-haslayout">
-		<!--************************************
+		<!--************
 				Header Start
-		*************************************-->
+		*************-->
 		<header id="tg-header" class="tg-header tg-headervthree tg-fixedheader">
 				<div class="container-fluid">
 					<div class="row">
@@ -108,13 +122,13 @@
 					</div>
 				</div>
 			</header>
-		<!--************************************
+		<!--************
 				Header End
-		*************************************-->
+		*************-->
 		<div class="tg-pushpage">
-			<!--************************************
+			<!--************
 					Home Slider Start
-			*************************************-->
+			*************-->
 			<div id="tg-innerbanner" class="tg-innerbanner tg-innerbannervfour">
 				<figure data-vide-bg="poster: images/hexback.jpg" data-vide-options="position: 0% 50%">
 					<figcaption>
@@ -130,16 +144,16 @@
 					</figcaption>
 				</figure>
 			</div>
-			<!--************************************
+			<!--************
 					Home Slider End
-			*************************************-->
-			<!--************************************
+			*************-->
+			<!--************
 					Main Start
-			*************************************-->
+			*************-->
 			<main id="tg-main" class="tg-main tg-haslayout">
-				<!--************************************
+				<!--************
 						Support Start
-				*************************************-->
+				*************-->
 				<section class="tg-haslayout">
 					<div class="tg-contactus tg-contactusvtwo">
 						<div class="container-fluid">
@@ -216,7 +230,7 @@
 												<h3><span>Let’s work together</span>Start your Project</h3>
 											</div>
 										
-											<form method="POST" id="contactus" class="tg-formtheme tg-formstartproject" enctype="application/json" action="https://prod-01.eastus.logic.azure.com:443/workflows/8a428578d58348b6bb79faadd105be3c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cNjnAoDbYO6HcBStQnAxY41C72UuqhMy18_KjvpAXr8" >
+											<form method="POST" id="contactus" class="tg-formtheme tg-formstartproject" enctype="application/json" onsubmit="myFunction()" >
 													
 													<input type="text" name="_gotcha" style="display:none">
 													<input type="hidden" name="_subject" value="Inquiry: Focus Hive">
@@ -224,20 +238,24 @@
 												<fieldset>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name">
+														<small class="custom-alert" id="alert-firstname"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name">
+														<small class="custom-alert" id="alert-lastname"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="email" id="email" name="email" class="form-control" placeholder="Email Address">
+														<small class="custom-alert" id="alert-email"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="text" id="tel" name="tel" class="form-control" placeholder="Phone Number">
+														<small class="custom-alert" id="alert-tel"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<span class="tg-select">
 															<select class="form-control" name="interest" id="interest">
-																<option>Select Company Size</option>
+																<option value="" selected>Select Company Size</option>
 																<option>Individual</option>
 																<option>Startup</option>
 																<option>Small Business</option>
@@ -245,6 +263,7 @@
 																<option>School</option>
 																<option>Government</option>
 															</select>
+															<small class="custom-alert" id="alert-interest"></small>
 														</span>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
@@ -258,23 +277,22 @@
 																<option value="North America">North America</option>
 																<option value="South America">South America</option>
 															</select>
+															<small class="custom-alert" id="alert-location"></small>
 														</span>
 													</div>
 													<div class="form-group">
 														<input type="text" id="topic" name="topic" class="form-control" placeholder="Topic">
+														<small class="custom-alert" id="alert-topic"></small>
 													</div>
 													<div class="form-group">
 														<textarea name="information" placeholder="Message"></textarea>
 													</div>
+													<div class="form-group g-recaptcha" data-sitekey="6LcQmrMZAAAAAEey6w8JtHPifOZq71xsPX3KiyJf"></div>
 													<div class="form-group">
 														<button class="tg-btn" type="submit"><span>send message</span></button>
 													</div>
 												</fieldset>
-												<div class="g-recaptcha"
-													data-sitekey="6LcHIYcUAAAAAPnqH0iBwnDeFma0mWAMJKJHAoEO"
-													data-callback="onSubmit"
-													data-size="invisible">
-												</div>
+												
 												<input type="hidden" name="test" value="off">
 												<input type="hidden" name="owner" value="20bfadb9-4991-e911-a95b-000d3a34ec54">
 												<input type="hidden" name="website" value="https://thefocushive.com">
@@ -355,16 +373,16 @@
 						</div>
 					</div>
 				</section>
-				<!--************************************
+				<!--************
 						Support End
-				*************************************-->
+				*************-->
 			</main>
-			<!--************************************
+			<!--************
 					Main End
-			*************************************-->
-			<!--************************************
+			*************-->
+			<!--************
 					Footer Start
-			*************************************-->
+			*************-->
 			<footer id="tg-footer" class="tg-footer tg-footervone">
 				<div class="tg-footercolumns">
 					<div class="container">
@@ -467,14 +485,14 @@
 					</div>
 				</div>
 			</footer>
-			<!--************************************
+			<!--************
 					Footer End
-			*************************************-->
+			*************-->
 		</div>
 	</div>
-	<!--************************************
+	<!--************
 			Wrapper End
-	*************************************-->
+	*************-->
 	<script src="js/vendor/jquery-library.js"></script>
 	<script src="js/vendor/bootstrap.min.js"></script>
 	<script src="https://maps.google.com/maps/api/js?key=AIzaSyCR-KEWAVCn52mSdeVeTqZjtqbmVJyfSus&language=en"></script>
@@ -500,49 +518,227 @@
 	$("#contactus").validate();
 	</script>
 	<script>
-
-		$("#contactus").submit(function(event){
-		if (!$("#contactus").validate().form()) {
-		return false; //doesn't validate
-		}else
-		{
-		event.preventDefault(); //prevent default action 
-		var post_url = $(this).attr("action"); //get form action url
-		var request_method = $(this).attr("method"); //get form GET/POST method
-		var content_type = $(this).attr("enctype"); //get form GET/POST method
-		var form_data = $(this).serialize(); //Encode form elements for submission
+		function validateEmail(data) {
+				let testData = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+				if (testData.test(data)) {
+					return true;
+				}
+				return (false)
+		}
+		function isNumeric(data) {
+				let letters = /^[0-9]+$/;
+				if (letters.test(data)) {
+					return true;
+				}
+				return false;
+		}
+		const _gotcha = document.querySelector('[name=_gotcha]');
+		const _subject = document.querySelector('[name=_subject]');
+		const firstname = document.querySelector('[name=firstname]');
+		const lastname = document.querySelector('[name=lastname]');
+		const email = document.querySelector('[name=email]');
+		const tel = document.querySelector('[name=tel]');
+		const interest = document.querySelector('[name=interest]');
+		const locations = document.querySelector('[name=location]');
+		const topic = document.querySelector('[name=topic]');
+		const information = document.querySelector('[name=information]');
+		const test = document.querySelector('[name=test]').value;
+		const owner = document.querySelector('[name=owner]').value;
+		const website = document.querySelector('[name=website]').value;
+		const budget = document.querySelector('[name=budget]').value;
+		const campaign = document.querySelector('[name=campaign]').value;
 		
-		$.ajax({
-				type: $(this).attr('method'),
-				url: $(this).attr('action'),
-				data: $(this).serialize(),
-				success: function (data) {
-					$("#register")[0].reset();
-					$("input:checkbox").attr('checked', false);
-					Swal({
-					title: '<strong>Submission Successful</strong>',
-					type: 'success',
-					html:
-						'We will reply as soon as we can. Thank you.',
-					showCloseButton: true,
-					focusConfirm: false,
-					confirmButtonText:
-						'<a style="color: white" href="start.html"><i class="fa fa-address-card"></i> OK</a>',
-					confirmButtonAriaLabel: 'OK',
+		
+
+		let isFirstNameValid, isLastNameValid, isEmailValid, istelValid, isInterestValid, isLocationValid = false;
+
+		const firstnameAlert = document.querySelector('#alert-firstname');
+		const lastnameAlert = document.querySelector('#alert-lastname');
+		const emailAlert = document.querySelector('#alert-email');
+		const telAlert = document.querySelector('#alert-tel');
+		const locationAlert = document.querySelector('#alert-location')
+		const interestAlert = document.querySelector('#alert-interest');
+
+
+		firstname.addEventListener('focus', function() {
+			firstnameAlert.innerHTML = ''
+			this.setCustomValidity('')
+			isFirstNameValid = false;
+		})
+		lastname.addEventListener('focus', function() {
+			lastnameAlert.innerHTML = '';
+			this.setCustomValidity('');
+			isLastNameValid = false;
+		})
+		email.addEventListener('focus', function() {
+			emailAlert.innerHTML = '';
+			this.setCustomValidity('');
+			isEmailValid = false;
+		})
+		tel.addEventListener('focus', function() {
+			telAlert.innerHTML = '';
+			this.setCustomValidity('');
+			istelValid = false;
+		})
+		locations.addEventListener('focus', function() {
+			locationAlert.innerHTML = '';
+			this.setCustomValidity('');
+			isLocationValid = false;
+		})
+		interest.addEventListener('focus', function () {
+			interestAlert.innerHTML = '';
+			this.setCustomValidity('');
+			isInterestValid = false;
+		});
+
+		function firstNameValidator () {
+			let nameValue = firstname.value;
+			if (!nameValue) {
+				firstnameAlert.innerHTML = 'First Name is required';
+				firstname.setCustomValidity('First Name is required');
+			} else if (nameValue.length <= 2) {
+				firstnameAlert.innerHTML = 'First Name length should be greater than 2';
+				firstname.setCustomValidity('First Name length should be greater than 2')
+			} else if (nameValue.length > 50) {
+				firstnameAlert.innerHTML = 'First Name length should be less than 50';
+				firstname.setCustomValidity('First Name length should be less than 50')
+			} else{
+				isFirstNameValid = true;
+			}
+		}
+		function lastNameValidator () {
+			let nameValue = lastname.value;
+			if (!nameValue) {
+				lastnameAlert.innerHTML = 'Last Name is required';
+				lastname.setCustomValidity('Last Name is required')
+			} else if (nameValue.length <= 2) {
+				lastnameAlert.innerHTML = 'Last Name length should be greater than 2';
+				lastname.setCustomValidity('Last Name length should be greater than 2')
+			} else if (nameValue.length > 50) {
+				lastnameAlert.innerHTML = 'First Name length should be less than 50';
+				lastname.setCustomValidity('First Name length should be less than 50')
+			} else {
+				isLastNameValid = true;
+			}
+		}
+		function resetValues() {
+			firstname.value = lastname.value = email.value = tel.value = locations.value = interest.value = topic.value = information.value = '' ;
+		}
+
+		function emailValidator() {
+			let emailValue = email.value;
+			if (!emailValue) {
+				emailAlert.innerHTML = 'Email id is required';
+				email.setCustomValidity('Email id is required');
+			} else if (!validateEmail(emailValue)) {
+				emailAlert.innerHTML = 'Please enter a valid Email id';
+				email.setCustomValidity('Please enter a valid Email id');
+			} else{
+				isEmailValid = true;
+			}
+		}
+
+		function telValidator() {
+			let telValue = tel.value;
+			if (!telValue) {
+				telAlert.innerHTML = 'Phone No is required'
+				tel.setCustomValidity('Phone No is required');
+			} else if (!isNumeric(telValue)) {
+				telAlert.innerHTML = 'Phone No. must contain only digits'
+				tel.setCustomValidity('Phone No. must contain only digits');
+			}
+			else if (telValue.length > 15) {
+				telAlert.innerHTML = 'Phone No should be less than 15'
+				tel.setCustomValidity('Phone No should be less than 15');
+			} else {
+				istelValid = true;
+			}
+
+		}
+
+		function locationValidator() {
+			if (locations.value.length==0) {
+				locationAlert.innerHTML = 'Please Select your Location';
+				locations.setCustomValidity('Please Select your Location');
+			} else{
+				isLocationValid = true;
+			}
+		}
+		function interestValidator() {
+			if (interest.value.length == 0) {
+				interestAlert.innerHTML = 'Please Select your Interest';
+				interest.setCustomValidity('Please Select your Interest');
+			} else {
+				isInterestValid = true;
+			}
+		}
+		
+		
+		firstname.addEventListener('blur', firstNameValidator);
+		lastname.addEventListener('blur', lastNameValidator);
+		email.addEventListener('blur', emailValidator);
+		tel.addEventListener('blur', telValidator);
+		locations.addEventListener('blur', locationValidator);
+		interest.addEventListener('blur', interestValidator);
+		
+		function myFunction(e) {
+				
+			if (grecaptcha.getResponse() == "") {
+				swal({
+					title: "Recaptcha Error",
+					text: "Please ensure recaptcha is checked",
+					icon: "error",
+					button: "Ok",
 				});
-					console.log('Submission was successful.');
-					console.log(data);
-					
-				},
-				error: function (data) {
-					console.log('An error occurred.');
-					console.log(data);
-				},
-			}).then(function(response){ //
-			$("#server-results").html(response);
-		}); //form is validated do your work
-		}	   
-	});
+			} else {
+				data = {
+					_gotcha: _gotcha.value,
+					_subject: _subject.value,
+					firstname: firstname.value,
+					lastname: lastname.value,
+					email: email.value,
+					tel: tel.value,
+					location: locations.value,
+					interest: interest.value,
+					topic: topic.value,
+					information: information.value,
+					test,
+					owner,
+					budget,
+					website,
+					campaign
+				}
+				var form_data = new FormData();
+				for (var key in data) {
+					form_data.append(key, data[key]);
+				}
+
+				if(isFirstNameValid && isLastNameValid && isEmailValid && istelValid && isInterestValid && isLocationValid){
+					fetch('https://prod-01.eastus.logic.azure.com/workflows/8a428578d58348b6bb79faadd105be3c/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=cNjnAoDbYO6HcBStQnAxY41C72UuqhMy18_KjvpAXr8', {
+						method: 'post',
+						body: form_data
+
+					}).then(res => {
+						swal("Good job!", "You no the button!", "success");
+						resetValues();
+					}).catch(err => {
+						swal('Some Error occured');
+					})
+				} else{
+					firstNameValidator() | lastNameValidator() | emailValidator() | locationValidator() | interestValidator() | telValidator();
+					swal({
+						title: "Form Error",
+						text: "Please ensure all fields are correct",
+						icon: "error",
+						button: "Ok",
+					})
+				}
+				
+			}
+
+		}
+
+	
 	</script>
 
 
