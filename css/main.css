@@ -35,6 +35,17 @@ body {
 	background: #fff;
 	font: 300 14px/24px 'Montserrat', Arial, Helvetica, sans-serif;
 }
+input:invalid, select:invalid{
+	border-color: #ea205a;
+}
+small.custom-alert{
+	position: absolute;
+	color: #ea205a;
+}
+.tg-select small{
+    text-transform: initial !important;
+}
+
 body h1,
 body h2,
 body h3,

@@ -41,6 +41,8 @@
 	<link rel="stylesheet" href="css/responsive.css">
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 	<script src="js/sweetalert2/dist/sweetalert2.all.min.js"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<!--[if lt IE 8]>
@@ -224,20 +226,24 @@
 												<fieldset>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="text" id="firstname" name="firstname" class="form-control" placeholder="First Name">
+														<small class="custom-alert" id="alert-firstname"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="text" id="lastname" name="lastname" class="form-control" placeholder="Last Name">
+														<small class="custom-alert" id="alert-lastname"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="email" id="email" name="email" class="form-control" placeholder="Email Address">
+														<small class="custom-alert" id="alert-email"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<input type="text" id="tel" name="tel" class="form-control" placeholder="Phone Number">
+														<small class="custom-alert" id="alert-tel"></small>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
 														<span class="tg-select">
 															<select class="form-control" name="interest" id="interest">
-																<option>Select Company Size</option>
+																<option value="">Select Company Size</option>
 																<option>Individual</option>
 																<option>Startup</option>
 																<option>Small Business</option>
@@ -245,6 +251,7 @@
 																<option>School</option>
 																<option>Government</option>
 															</select>
+															<small class="custom-alert" id="alert-interest"></small>
 														</span>
 													</div>
 													<div class="form-group col-md-6 col-lg-6">
@@ -258,23 +265,21 @@
 																<option value="North America">North America</option>
 																<option value="South America">South America</option>
 															</select>
+															<small class="custom-alert" id="alert-location"></small>
 														</span>
 													</div>
 													<div class="form-group">
 														<input type="text" id="topic" name="topic" class="form-control" placeholder="Topic">
+														<small class="custom-alert"></small>
 													</div>
 													<div class="form-group">
 														<textarea name="information" placeholder="Message"></textarea>
 													</div>
+													<div class="form-group g-recaptcha" data-sitekey="6LcQmrMZAAAAAEey6w8JtHPifOZq71xsPX3KiyJf"></div>
 													<div class="form-group">
 														<button class="tg-btn" type="submit"><span>send message</span></button>
 													</div>
 												</fieldset>
-												<div class="g-recaptcha"
-													data-sitekey="6LcHIYcUAAAAAPnqH0iBwnDeFma0mWAMJKJHAoEO"
-													data-callback="onSubmit"
-													data-size="invisible">
-												</div>
 												<input type="hidden" name="test" value="off">
 												<input type="hidden" name="owner" value="20bfadb9-4991-e911-a95b-000d3a34ec54">
 												<input type="hidden" name="website" value="https://thefocushive.com">
@@ -493,57 +498,9 @@
 	<script src="js/countTo.js"></script>
 	<script src="js/appear.js"></script>
 	<script src="js/gmap3.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+	<script src='js/support.validate.js'></script>
 	<script src="js/main.js"></script>
-
-	<script src="js/jquery.validate.js"></script>
-	<script>
-	$("#contactus").validate();
-	</script>
-	<script>
-
-		$("#contactus").submit(function(event){
-		if (!$("#contactus").validate().form()) {
-		return false; //doesn't validate
-		}else
-		{
-		event.preventDefault(); //prevent default action 
-		var post_url = $(this).attr("action"); //get form action url
-		var request_method = $(this).attr("method"); //get form GET/POST method
-		var content_type = $(this).attr("enctype"); //get form GET/POST method
-		var form_data = $(this).serialize(); //Encode form elements for submission
-		
-		$.ajax({
-				type: $(this).attr('method'),
-				url: $(this).attr('action'),
-				data: $(this).serialize(),
-				success: function (data) {
-					$("#register")[0].reset();
-					$("input:checkbox").attr('checked', false);
-					Swal({
-					title: '<strong>Submission Successful</strong>',
-					type: 'success',
-					html:
-						'We will reply as soon as we can. Thank you.',
-					showCloseButton: true,
-					focusConfirm: false,
-					confirmButtonText:
-						'<a style="color: white" href="start.html"><i class="fa fa-address-card"></i> OK</a>',
-					confirmButtonAriaLabel: 'OK',
-				});
-					console.log('Submission was successful.');
-					console.log(data);
-					
-				},
-				error: function (data) {
-					console.log('An error occurred.');
-					console.log(data);
-				},
-			}).then(function(response){ //
-			$("#server-results").html(response);
-		}); //form is validated do your work
-		}	   
-	});
-	</script>
 
 
 </body>
