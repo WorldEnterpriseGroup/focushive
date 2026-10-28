@@ -17,6 +17,8 @@ stages:
   - test
 
 variables:
+  # Shallow clone: the runner's full fetch of this large static tree can stall.
+  GIT_DEPTH: "1"
   IMAGE_REGISTRY: harbor.focuscell.org
   PREFLIGHT_IMAGE: ${IMAGE_REGISTRY}/mcr-proxy/playwright:v1.58.2-noble
 
