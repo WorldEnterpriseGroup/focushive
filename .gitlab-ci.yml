@@ -1,0 +1,56 @@
+# .gitlab-ci.yml — Focus Hive marketing site (gh-pages) quality gates
+#
+# Stages: lint → test
+#   lint : HTMLHint on the compliance pages (via launch-sequence .preflight:lint)
+#   test : Playwright e2e SMS/carrier compliance suite
+#
+# Deploy: handled by the GitHub Pages mirror (push-mirror gh-pages → GitHub).
+#         CI does NOT build or deploy.
+
+include:
+  - project: 'DroidOpsInc/launch-sequence'
+    ref: main
+    file: '/jobs/preflight.yml'
+
+stages:
+  - lint
+  - test
+
+variables:
+  IMAGE_REGISTRY: harbor.focuscell.org
+  PREFLIGHT_IMAGE: ${IMAGE_REGISTRY}/mcr-proxy/playwright:v1.58.2-noble
+
+lint:
+  extends: .preflight:lint
+  stage: lint
+  variables:
+    PREFLIGHT_REQUIRED_TOOLS: node npx python3
+    PREFLIGHT_COMMANDS: |
+      echo "=== HTMLHint (compliance pages) ==="
+      npx --yes htmlhint privacy.html terms.html sms-terms.html sms-privacy.html sms-opt-in.html thanks.html 404error.html
+
+e2e:
+  stage: test
+  image: ${PREFLIGHT_IMAGE}
+  retry:
+    max: 1
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+      - scheduler_failure
+  variables:
+    CI: "true"
+    PLAYWRIGHT_BROWSERS_PATH: ${CI_PROJECT_DIR}/.pw-browsers
+  script:
+    - npm ci || npm install
+    - npx playwright install chromium
+    - npm run test:e2e
+  artifacts:
+    when: always
+    expire_in: 1 week
+    paths:
+      - playwright-report/
+      - test-results/
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "gh-pages"
