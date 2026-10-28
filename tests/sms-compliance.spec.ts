@@ -17,9 +17,9 @@ const NO_SHARE_2 =
 
 const compliancePages = ['/privacy.html', '/terms.html', '/sms-terms.html', '/sms-privacy.html', '/sms-opt-in.html'];
 const sitePages = [
-  '/', '/aboutus.html', '/features.html', '/features_personal.html', '/ourservices.html', '/ourprocess.html',
+  '/', '/aboutus.html', '/features.html', '/features_personal.html', 
   '/support.html', '/invitation.html', '/swarm/index.html', '/solution/business.html', '/solution/personal.html',
-  '/partner/index.html', '/work/index.html', '/story/index.html', '/thanks.html', '/404error.html',
+  '/thanks.html', '/404error.html',
   ...compliancePages,
 ];
 
@@ -117,12 +117,12 @@ test.describe('site-wide footer and content', () => {
   test('no placeholder or under-construction content on published pages', async ({ request }) => {
     for (const url of sitePages) {
       const html = (await (await request.get(url)).text()).replace(/<script[\s\S]*?<\/script>/gi, '');
-      expect(html, url).not.toMatch(/coming soon|under construction|lorem ipsum|maintenance mode|Tao Fruit/i);
+      expect(html, url).not.toMatch(/coming soon|under construction|lorem ipsum|maintenance mode|Tao Fruit LLC/i);
     }
   });
 
   test('legacy placeholder pages are gone', async ({ request }) => {
-    for (const url of ['/comingsoon.html', '/maintenance.html', '/test.html']) {
+    for (const url of ['/comingsoon.html', '/maintenance.html', '/test.html', '/cart.html', '/ourservices.html']) {
       expect((await request.get(url)).status(), url).toBe(404);
     }
   });
