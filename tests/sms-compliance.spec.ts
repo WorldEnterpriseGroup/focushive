@@ -59,6 +59,20 @@ test.describe('SMS terms', () => {
     expect(text).toContain(NO_SHARE);
   });
 
+  test('sample messages and STOP/HELP texts match the campaign on file', async ({ page }) => {
+    await page.goto('/sms-terms.html', { waitUntil: 'domcontentloaded' });
+    const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
+    for (const sample of [
+      'Hi Dana, this is Sean from Focus Hive. Confirming our call tomorrow at 2:00 PM ET as we discussed. Reply here if you need to reschedule. Msg&data rates may apply. Reply HELP for help, STOP to opt out.',
+      'Hi Priya, this is Suzanne from Focus Hive. Thanks for your question about your account. I have emailed you the details, so text me back here if anything is unclear. Msg&data rates may apply. Reply HELP for help, STOP to opt out.',
+      'Hi Alex, this is Matthew from Focus Hive. The access you asked for is set up. Check your email for the login details, and text me here if you need a hand. Msg&data rates may apply. Reply HELP for help, STOP to opt out.',
+      'Focus Hive: You have been unsubscribed and will get no more text messages from this number. Reply START to subscribe again.',
+      'Focus Hive: Reply to this text and the member of our team you are talking with will respond. Msg frequency varies. Msg&data rates may apply. Reply STOP to opt out. Contact: matthew@focushive.com',
+    ]) {
+      expect(text).toContain(sample);
+    }
+  });
+
   test('welcome message includes company, frequency, rates, STOP and HELP', async ({ page }) => {
     await page.goto('/sms-terms.html', { waitUntil: 'domcontentloaded' });
     const sample = (await page.locator('.sample').first().innerText()).replace(/\s+/g, ' ');
