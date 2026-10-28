@@ -131,7 +131,7 @@ test.describe('site-wide footer and content', () => {
   test('no placeholder or under-construction content on published pages', async ({ request }) => {
     for (const url of sitePages) {
       const html = (await (await request.get(url)).text()).replace(/<script[\s\S]*?<\/script>/gi, '');
-      expect(html, url).not.toMatch(/coming soon|under construction|lorem ipsum|maintenance mode|Tao Fruit LLC/i);
+      expect(html, url).not.toMatch(/coming soon|under construction|lorem ipsum|maintenance mode|Tao Fruit LLC|website\.co\.uk|@WordPress|Twitter Feed/i);
     }
   });
 
