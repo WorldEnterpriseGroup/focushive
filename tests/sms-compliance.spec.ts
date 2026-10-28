@@ -25,7 +25,7 @@ const sitePages = [
 
 test.describe('privacy policy', () => {
   test('is reachable and contains the carrier no-sharing statement', async ({ page }) => {
-    const res = await page.goto('/privacy.html');
+    const res = await page.goto('/privacy.html', { waitUntil: 'domcontentloaded' });
     expect(res?.status()).toBe(200);
     const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
     expect(text).toContain(NO_SHARE);
@@ -36,7 +36,7 @@ test.describe('privacy policy', () => {
   });
 
   test('sms privacy policy repeats the no-sharing statement', async ({ page }) => {
-    await page.goto('/sms-privacy.html');
+    await page.goto('/sms-privacy.html', { waitUntil: 'domcontentloaded' });
     const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
     expect(text).toContain(NO_SHARE);
     expect(text).toContain(ADDRESS);
@@ -45,7 +45,7 @@ test.describe('privacy policy', () => {
 
 test.describe('SMS terms', () => {
   test('state program, message types, frequency, rates, STOP, HELP, support, carriers', async ({ page }) => {
-    await page.goto('/sms-terms.html');
+    await page.goto('/sms-terms.html', { waitUntil: 'domcontentloaded' });
     const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
     expect(text).toContain('Focus Hive Staff Business Messaging');
     expect(text).toMatch(/message frequency/i);
@@ -60,7 +60,7 @@ test.describe('SMS terms', () => {
   });
 
   test('welcome message includes company, frequency, rates, STOP and HELP', async ({ page }) => {
-    await page.goto('/sms-terms.html');
+    await page.goto('/sms-terms.html', { waitUntil: 'domcontentloaded' });
     const sample = (await page.locator('.sample').first().innerText()).replace(/\s+/g, ' ');
     expect(sample).toContain('Focus Hive');
     expect(sample).toMatch(/frequency varies/i);
@@ -74,7 +74,7 @@ test.describe('opt-in form', () => {
   const formPages = ['/sms-opt-in.html', '/support.html', '/invitation.html'];
   for (const url of formPages) {
     test(`${url}: SMS consent checkbox is unchecked, optional, and fully disclosed`, async ({ page }) => {
-      await page.goto(url);
+      await page.goto(url, { waitUntil: 'domcontentloaded' });
       const box = page.locator('input[type=checkbox][name=sms_consent]');
       await expect(box).toHaveCount(1);
       await expect(box).not.toBeChecked();
@@ -105,7 +105,7 @@ test.describe('opt-in form', () => {
 test.describe('site-wide footer and content', () => {
   for (const url of sitePages) {
     test(`${url} links privacy policy, terms and SMS terms`, async ({ page }) => {
-      const res = await page.goto(url);
+      const res = await page.goto(url, { waitUntil: 'domcontentloaded' });
       expect(res?.status()).toBeLessThan(400);
       for (const href of ['/privacy.html', '/terms.html', '/sms-terms.html']) {
         await expect(page.locator(`a[href="${href}"]`).first(), `${url} -> ${href}`).toBeAttached();
@@ -128,7 +128,7 @@ test.describe('site-wide footer and content', () => {
   });
 
   test('contact details match the registered brand', async ({ page }) => {
-    await page.goto('/support.html');
+    await page.goto('/support.html', { waitUntil: 'domcontentloaded' });
     const text = (await page.locator('body').innerText()).replace(/\s+/g, ' ');
     expect(text).toContain(ADDRESS);
     expect(text).toContain('929-374-4853');
