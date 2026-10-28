@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus Hive Inc. - SMS Sign-Up</title>
+    <meta name="description" content="Opt in to receive text messages from Focus Hive Inc. staff.">
+    <link rel="canonical" href="https://focushive.com/sms-opt-in.html">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/logo/favicon-32x32.png">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        h1 { text-align: center; margin-bottom: 20px; }
+        h2 { margin-top: 30px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        p, ul { margin-bottom: 15px; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        a { color: #0056b3; text-decoration: underline; }
+        .topnav { max-width: 800px; margin: 0 auto 15px; }
+        .footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #444; }
+        .footer a { margin: 0 6px; }
+        .callout { background: #eef6ff; border: 1px solid #b6d4fe; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .sample { background: #f8f9fa; border-left: 4px solid #0056b3; padding: 10px 15px; margin: 10px 0 20px; }
+        label { display: block; font-weight: bold; margin-top: 12px; }
+        input[type=text], input[type=tel], input[type=email] { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #888; border-radius: 4px; }
+        .consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; font-weight: normal; }
+        .consent input { margin-top: 5px; flex: none; }
+        button { margin-top: 18px; padding: 10px 22px; background: #0056b3; color: #fff; border: 0; border-radius: 4px; font-size: 1em; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="topnav"><a href="/">&larr; Focus Hive home</a></div>
+    <main class="container">
+
+        <h1>Text with Focus Hive</h1>
+        <p>Share your details and, if you choose, agree to text messages from a Focus Hive team member about your inquiry. Texting is optional: you can submit this form without checking the box and we will contact you by email instead.</p>
+        <p><strong>Program:</strong> Focus Hive Staff Business Messaging. One-to-one conversational messages (replies, follow-ups, project updates, scheduling). Message frequency varies. Msg &amp; data rates may apply. Reply STOP to cancel, HELP for help.</p>
+
+        <form method="POST" id="sms-optin-form" action="https://door.taolearning.org/api/form" enctype="application/json">
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+            <input type="hidden" name="_subject" value="SMS Opt-In: Focus Hive">
+            <input type="hidden" name="_next" value="https://focushive.com/thanks.html">
+            <input type="hidden" name="website" value="https://focushive.com">
+            <input type="hidden" name="campaign" value="Focus Hive">
+            <input type="hidden" name="formType" value="sms-opt-in">
+            <label for="sms-name">Name</label>
+            <input type="text" id="sms-name" name="name" autocomplete="name" required>
+            <label for="sms-email">Email</label>
+            <input type="email" id="sms-email" name="email" autocomplete="email" required>
+            <label for="sms-phone">Mobile phone number</label>
+            <input type="tel" id="sms-phone" name="tel" autocomplete="tel" required>
+            <label class="consent" for="sms-consent">
+                <input type="checkbox" id="sms-consent" name="sms_consent" value="yes">
+                <span>I agree to receive text messages from Focus Hive Inc. at the mobile number I provided, including one-to-one conversational messages from a Focus Hive team member about my inquiry, project updates, and scheduling. Consent is optional and is not a condition of purchase or of using any Focus Hive service. Message frequency varies. Msg &amp; data rates may apply. Reply STOP to cancel at any time, HELP for help. See our <a href="/sms-terms.html">SMS Terms</a> and <a href="/privacy.html">Privacy Policy</a>.</span>
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+
+        <h2>About this program</h2>
+        <p>Read the full <a href="/sms-terms.html">SMS Terms &amp; Conditions</a> and <a href="/privacy.html">Privacy Policy</a>. No mobile information will be shared with third parties/affiliates for marketing/promotional purposes. All other categories exclude text messaging originator opt-in data and consent; this information will not be shared with any third parties.</p>
+
+    </main>
+
+        <div class="footer" role="contentinfo">
+            <p>
+                <a href="/privacy.html">Privacy Policy</a> |
+                <a href="/terms.html">Terms of Use</a> |
+                <a href="/sms-terms.html">SMS Terms</a> |
+                <a href="/sms-privacy.html">SMS Privacy</a> |
+                <a href="/sms-opt-in.html">SMS Sign-Up</a>
+            </p>
+            <p>&copy; 2026 Focus Hive Inc. All rights reserved.<br>1041 N Dupont Hwy #1178, Dover, DE 19901 | <a href="mailto:info@focushive.com">info@focushive.com</a> | <a href="tel:+19293744853">929-374-4853</a></p>
+        </div>
+
+</body>
+</html>
