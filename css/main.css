@@ -21,7 +21,6 @@
 /* =============================================
 			Theme Reset Style					
 ============================================= */
-@import url(https://fonts.googleapis.com/css?family=Lora:400i,700i|Montserrat:300,400,500,600,700|Roboto:100,300,400,500,700,900);
 * {
 	margin: 0px;
 	padding: 0px;
@@ -8600,5 +8599,16 @@ Bottom to Top
 	-o-transition: all 0.3s 1s ease-out;
 	transition: all 0.3s 1s ease-out;
 }
-}
 
+/* =============================================
+	Layout stability (performance)
+============================================= */
+/* The home slider is display:none until owl.carousel initialises it. Reserve its box (same
+   figcaption min-height rules as after init) so the sections below do not jump down. */
+.tg-homeslider.owl-carousel:not(.owl-loaded){
+	display: block;
+	visibility: hidden;
+}
+/* Images with width/height attributes keep their aspect ratio while the CSS width is responsive. */
+img[width][height][decoding="async"],
+.tg-logo a img[width][height]{height: auto;}
